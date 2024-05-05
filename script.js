@@ -17,7 +17,6 @@ container.appendChild(title)
 
 const textitle = document.createTextNode('HOLA')
 title.appendChild(textitle) */
-
 const datos = (personajes) => {
     personajes.forEach(characters => {
         /* console.log(elemento.name) */
@@ -27,10 +26,9 @@ const datos = (personajes) => {
         const target__title = document.createElement('h2')
         const title__text = document.createTextNode(characters.name)
         const target__link = document.createElement('a')
-        target__link.href = `https://gateway.marvel.com:443/v1/public/characters/${id}?apikey=${apikey}&ts=${ts}&hash=${hash}`;
-        console.log(id)
-        /* https://gateway.marvel.com:443/v1/public//characters/1010846?apikey=a2398fdfbd317316277fe42c389550e7&ts=04/05/2024,%2002:04:03&hash=a5c11dd0c74a5615241c3ee4eeaef49f */
-
+        target__link.setAttribute('target', '_blank')
+        /* target__link.href = `https://gateway.marvel.com:443/v1/public/characters/${id}?apikey=${apikey}&ts=${ts}&hash=${hash}` */
+        target__link.href = `detalles.html?id=${id}`/* pasando el id */
         target__title.appendChild(title__text)
         target.appendChild(target__title)
         container.appendChild(target)
