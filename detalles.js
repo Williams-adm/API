@@ -26,7 +26,7 @@ const datos = (personajes) => {
         container__content.appendChild(img)
         ////////////////////////////////////
         /* validación */
-        let descrip = characters.description 
+        let descrip = characters.description
         if (!descrip) {
             descrip = "I'm sorry, but this heroe has not description"
         }
@@ -37,38 +37,54 @@ const datos = (personajes) => {
         description.appendChild(description__text)
         container__content.appendChild(description)
         /////////////////////////////////////
-
-
+        /* Generando el url para traer mas detalles de comics */
+        const urlcomic = characters.comics.collectionURI + `?apikey=${apikey}` + `&ts=${ts}` + `&hash=${hash}`
+        //////////////////////////////////////
+        fetch(urlcomic)
+            .then(response => response.json())
+            .then(response => datocomic(response.data.results))
+            .catch(error => console.log("Se ha producido un error: ", error))
         /* Accediendo a los comics */
-        characters.comics.items.forEach(comic => {
-            //////////////////////////////////////
-            const container__title__comic = document.querySelector('.container__title__comic')
-            const title__comic = document.createElement('h3')
-            const title__text__comic = document.createTextNode(comic.name)
-            title__comic.appendChild(title__text__comic)
-            container__title__comic.appendChild(title__comic)
-            ///////////////////////////////////////
-            urlcomic = comic.resourceURI + `?apikey=${apikey}` + `&ts=${ts}` + `&hash=${hash}`
-            fetch(urlcomic)
-                .then(response => response.json())
-                .then(response => datocomic(response.data.results))
-                .catch(error => console.log("Se ha producido un error: ", error))
-            
-            const datocomic = (comic) => {
-                comic.forEach(datecomic => {
-                    const linkcomic = document.createElement('a')
-                    linkcomic.href = "https://www.youtube.com/watch?v=iiMM1LkyXlo&list=RDtQ43q3RKlOE&index=3"
-                    const imgcomic = document.createElement('img')
-                    imgcomic.src = datecomic.thumbnail.path + '.' + datecomic.thumbnail.extension
-                    linkcomic.appendChild(imgcomic)
-                    const container__content__comic = document.createElement('div')
-                    container__content__comic.appendChild(linkcomic)
-                    const container__comic = document.querySelector('container__comic')
-                    container__comic.appendChild(container__content__comic)
-                })
-            }
-        })
-        
+        const datocomic = (datecomic) => {
+            datecomic.forEach(datecomics => {
+                /* CREAR TITULO COMIC */
+                const content__comic = document.createElement('div')
+                const title__comic = document.createElement('h3')
+                const title__comic__text = document.createTextNode(datecomics.title)
+                const container__comic = document.querySelector('.container__comic')
+                title__comic.appendChild(title__comic__text)
+                content__comic.appendChild(title__comic)
+                container__comic.appendChild(content__comic)
+                /* crear imagen comic */
+                const comic__img = document.createElement('img')
+                comic__img.src = datecomics.thumbnail.path + '.' + datecomics.thumbnail.extension
+                content__comic.appendChild(comic__img)
 
-    });
+            })
+        }
+        /* Generando el url para traer mas detalles de series */
+        const urlseries = characters.series.collectionURI + `?apikey=${apikey}` + `&ts=${ts}` + `&hash=${hash}`
+        ///////////////////////////////////////////////////////////
+        fetch(urlseries)
+            .then(response => response.json())
+            .then(response => datoseries(response.data.results))
+            .catch(error => console.log("Se ha producido un error: ", error))
+        /* Accediendo a las series */
+        const datoseries = (dateseries) => {
+            dateseries.forEach(dateserie => {
+                /* Crear titulo series */
+                const content__series = document.createElement('div')
+                const title__series = document.createElement('h3')
+                const title__series__text = document.createTextNode(dateserie.title)
+                const container__series = document.querySelector('.container__series')
+                title__series.appendChild(title__series__text)
+                content__series.appendChild(title__series)
+                container__series.appendChild(content__series)
+                /* Crear imagen series */
+                const serie__img = document.createElement('img')
+                serie__img.src = dateserie.thumbnail.path + '.' + dateserie.thumbnail.extension
+                content__series.appendChild(serie__img)
+            })
+        }
+    })
 }

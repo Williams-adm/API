@@ -26,16 +26,28 @@ const datos = (personajes) => {
         const target__title = document.createElement('h2')
         const title__text = document.createTextNode(characters.name)
         const target__link = document.createElement('a')
+        const target__link__text = document.createTextNode('MORE ABOUT ME')
         target__link.setAttribute('target', '_blank')
-        /* target__link.href = `https://gateway.marvel.com:443/v1/public/characters/${id}?apikey=${apikey}&ts=${ts}&hash=${hash}` */
         target__link.href = `detalles.html?id=${id}`/* pasando el id */
+        const boton = document.createElement('button')
+        const target__imagen = document.createElement('img')
+        /* target__link.href = `https://gateway.marvel.com:443/v1/public/characters/${id}?apikey=${apikey}&ts=${ts}&hash=${hash}` */
+        /////////////////////////////////////////////////
+        /* titulo ingresar */
         target__title.appendChild(title__text)
         target.appendChild(target__title)
         container.appendChild(target)
         ///////////////////////////////////////////
-        const target__imagen = document.createElement('img')
+        /* insertar imagen */
         target__imagen.src = characters.thumbnail.path + '.' + characters.thumbnail.extension
-        target__link.appendChild(target__imagen)
-        target.appendChild(target__link)
+        target.appendChild(target__imagen)
+        /*target__link.appendChild(target__imagen)
+        target.appendChild(target__link) */
+        ////////////////////////////////////////////
+        /* insertat a */
+        target__link.appendChild(target__link__text)
+        boton.appendChild(target__link)
+        target.appendChild(boton)
+        /////////////////////////////////////////////
     });
 }
