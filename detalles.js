@@ -41,10 +41,15 @@ const datos = (personajes) => {
         }
         /////////////////////////////////////
         /* uso de la validación para la descripcion */
+        const content__description = document.createElement('div')
+        const description__title = document.createElement('h3')
+        const description__title__text = document.createTextNode('DESCRIPTION:')
+        description__title.appendChild(description__title__text)
         const description = document.createElement('p')
         const description__text = document.createTextNode(descrip)
         description.appendChild(description__text)
-        container__content.appendChild(description)
+        content__description.append(description__title, description)
+        container__content.appendChild(content__description)
         /////////////////////////////////////
         /* Generando el url para traer mas detalles de comics */
         const urlcomic = characters.comics.collectionURI + `?apikey=${apikey}` + `&ts=${ts}` + `&hash=${hash}`
@@ -82,9 +87,11 @@ const datos = (personajes) => {
                 content__comic.appendChild(comic__img)
                 container__comic.appendChild(content__comic)
                 /* Crear boton */
+                const comic__id = datecomics.id
                 const boton__comic = document.createElement('button')
                 const a__comic = document.createElement('a')
                 const a__comic__text = document.createTextNode('MORE INFORMATION HERE')
+                a__comic.href = `comic.html?id=${comic__id}`/* pasando el id */
                 a__comic.setAttribute('target', '_blank')
                 a__comic.appendChild(a__comic__text)
                 boton__comic.appendChild(a__comic)
