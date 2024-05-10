@@ -134,59 +134,155 @@ async function mascomic() {
                         const responsecre = await fetch(urlcreators)
                         const infocre = await responsecre.json()
                         const inforesultadocre = await infocre.data.results
-                        const create__array = creador__array
-                        const al__array = a__array
-                        inforesultadocre.forEach(creator => {
-                            creator__valid__img = creator.thumbnail
-                            /* Validar existencia de img */
-                            let valor = 0
-                            if (creator__valid__img) {
-                                valor = creator.thumbnail.path + '.' + creator.thumbnail.extension
-                            }
-                            else {
-                                valor = "img/no creator.png"
-                            }
-                            creador__array.push(valor)
-                            /* linkeado */
-                            if (inforesultado.urls) {
-                                inforesultado.urls.forEach(urls => {
-                                    const url__valid = urls.url
-                                    let valor__url = 0
-                                    if (url__valid) {
-                                        valor__url = urls.url
-                                    }
-                                    a__array.push(valor__url)
-                                })
-                            }
-                        })
-                        ///////////////////////////////////////////////////////
-                        comic.creators.items.forEach((autor, index) => {
-                            const content__creator = document.createElement('div')
-                            const name__creator = document.createElement('h4')
-                            const name__creator__text = document.createTextNode(autor.name)
-                            name__creator.appendChild(name__creator__text)
-                            const rol__creator = document.createElement('h4')
-                            const rol__Creator__text = document.createTextNode('ROLE: ')
-                            rol__creator.appendChild(rol__Creator__text)
-                            const rol = document.createElement('p')
-                            const rol__text = document.createTextNode(autor.role)
-                            rol.appendChild(rol__text)
-                            const container__creators = document.querySelector('.container__creators')
-                            /* CORRECCION AQUI */
-                            responsecre.then(() => {
+                        if (inforesultadocre.length !== 0) {
+                            inforesultadocre.forEach(creator => {
+                                const creator__valid__img = creator.thumbnail
+                                /* Validar existencia de img */
+                                let valor = 0
+                                if (creator__valid__img) {
+                                    valor = creator.thumbnail.path + '.' + creator.thumbnail.extension
+                                }
+                                else {
+                                    valor = "img/no creator.png"
+                                }
+                                creador__array.push(valor)
+                                /* linkeado */
+                                if (creator.urls) {
+                                    creator.urls.forEach(urls => {
+                                        const url__valid = urls.url
+                                        let valor__url = 0
+                                        if (url__valid) {
+                                            valor__url = urls.url
+                                        } else {
+                                            valor__url = ""
+                                        }
+                                        a__array.push(valor__url)
+                                    })
+                                }
+                            })
+                            ///////////////////////////////////////////////////////
+                            comic.creators.items.forEach((autor, index) => {
+                                const content__creator = document.createElement('div')
+                                const name__creator = document.createElement('h4')
+                                const name__creator__text = document.createTextNode(autor.name)
+                                name__creator.appendChild(name__creator__text)
+                                /* Agregando el url a el nombre del creador */
+                                const alink__creator = document.createElement('a')
+                                alink__creator.href = a__array[index]
+                                alink__creator.appendChild(name__creator)
+                                const rol__creator = document.createElement('h4')
+                                const rol__Creator__text = document.createTextNode('ROLE: ')
+                                rol__creator.appendChild(rol__Creator__text)
+                                const rol = document.createElement('p')
+                                const rol__text = document.createTextNode(autor.role)
+                                rol.appendChild(rol__text)
+                                const container__creators = document.querySelector('.container__creators')
                                 /* Llmando el array creado de arriba */
                                 const img__creator = document.createElement('img')
                                 img__creator.src = creador__array[index]
-                                content__creator.append(name__creator, rol__creator, rol, img__creator)
+                                content__creator.append(alink__creator, rol__creator, rol, img__creator)
                                 container__creators.append(content__creator)
                             })
-                        })
-                        
+                        } else {
+                            const container__creators__delete = document.querySelector('.container__creators')
+                            container__creators__delete.remove()
+                        }
                     } catch (error) {
                         console.log("Se ha producido un error: ", error)
                     }
                 }
                 infocreator()
+            } else {
+                const container__creators__delete = document.querySelector('.container__creators')
+                container__creators__delete.remove()
+            }
+            if (comic.characters.length !== 0) {
+                async function infocharacter() {
+                    try {
+                        urlcharacters = comic.characters.collectionURI + `?apikey=${apikey}` + `&ts=${ts}` + `&hash=${hash}`
+                        const responsecha = await fetch(urlcharacters)
+                        const infocha = await responsecha.json()
+                        const inforesultadocha = await infocha.data.results
+                        inforesultadocha.forEach(character => {
+                            if (character !== 0) {
+                                const container__characters = document.querySelector('.container__characters')
+                                const content__characters = document.createElement('div')
+                                const title__characters = document.createElement('h3')
+                                const title__characters__text = document.createTextNode(character.name)
+                                title__characters.appendChild(title__characters__text)
+                                const img__character = document.createElement('img')
+                                if (character.thumbnail !== 0) {
+                                    img__character.src = character.thumbnail.path + '.' + character.thumbnail.extension
+                                } else {
+                                    img__character.src = "img/no characters.jpg"
+                                }
+                                const id = character.id
+                                const button__character = document.createElement('button')
+                                const alink__character = document.createElement('a')
+                                alink__character.setAttribute('target', '_blank')
+                                alink__character.href = `detalles.html?id=${id}`
+                                const alink__character__text = document.createTextNode('MORE ABOUT ME')
+                                alink__character.appendChild(alink__character__text)
+                                button__character.appendChild(alink__character)
+                                content__characters.append(title__characters, img__character, button__character)
+                                container__characters.appendChild(content__characters)
+                            }
+                            else {
+                                const container__characters__delete = document.querySelector('.container__characters')
+                                container__characters__delete.remove()
+                            }
+                        });
+                    } catch (error) {
+                        console.log("Se ha producido un error: ", error)
+                    }
+                } infocharacter()
+            } else {
+                const container__characters__delete = document.querySelector('.container__characters')
+                container__characters__delete.remove()
+            }
+            /* stories */
+            if (comic.series.length !== 0) {
+                async function infoserie() {
+                    try {
+                        urlserie = comic.stories.collectionURI + `?apikey=${apikey}` + `&ts=${ts}` + `&hash=${hash}`
+                        const responseser = await fetch(urlserie)
+                        const infoser = await responseser.json()
+                        const inforesultadoser = await infoser.data.results
+                        inforesultadoser.forEach(serie => {
+                            if (serie !== 0) {
+                                const container__serie = document.querySelector('.container__serie')
+                                const content__serie = document.createElement('div')
+                                const serie__title = document.createElement('h3')
+                                const serie__title__text = document.createTextNode(serie.title)
+                                serie__title.appendChild(serie__title__text)
+                                const img__serie = document.createElement('img')
+                                const valide__img__serie = serie.thumbnail
+                                if (valide__img__serie) {
+                                    img__serie.src = serie.thumbnail.path + '.' + serie.thumbnail.extension
+                                } else {
+                                    img__serie.src = "img/no serie.jpg"
+                                }
+                                const button__serie = document.createElement('button')
+                                const alink__serie = document.createElement('a')
+                                alink__serie.setAttribute('target', '_blank')
+                                const alink__serie__text = document.createTextNode('MORE ABOUT ME')
+                                alink__serie.appendChild(alink__serie__text)
+                                button__serie.appendChild(alink__serie)
+                                content__serie.append(serie__title, img__serie, button__serie)
+                                container__serie.appendChild(content__serie)
+                            } else {
+                                const container__serie__delete = document.querySelector('.container__serie')
+                                container__serie__delete.remove()
+                            }
+                        })
+                    } catch (error) {
+                        console.log("Se ha producido un error: ", error)
+                    }
+                } infoserie()
+            }
+            else {
+                const container__serie__delete = document.querySelector('.container__serie')
+                container__serie__delete.remove()
             }
         });  
     } catch (error) {
