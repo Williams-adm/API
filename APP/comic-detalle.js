@@ -37,7 +37,7 @@ async function mascomic() {
                 comic__img.src = comic.thumbnail.path + '.' + comic.thumbnail.extension
             }
             else {
-                comic__img.src = "img/no comic.jpg"
+                comic__img.src = "../img/no comic.jpg"
             }
             container__content.appendChild(comic__img)
             /* Creando Descripción */
@@ -143,7 +143,7 @@ async function mascomic() {
                                     valor = creator.thumbnail.path + '.' + creator.thumbnail.extension
                                 }
                                 else {
-                                    valor = "img/no creator.png"
+                                    valor = "../img/no creator.png"
                                 }
                                 creador__array.push(valor)
                                 /* linkeado */
@@ -168,6 +168,7 @@ async function mascomic() {
                                 name__creator.appendChild(name__creator__text)
                                 /* Agregando el url a el nombre del creador */
                                 const alink__creator = document.createElement('a')
+                                alink__creator.setAttribute('target', '_blank')
                                 alink__creator.href = a__array[index]
                                 alink__creator.appendChild(name__creator)
                                 const rol__creator = document.createElement('h4')
@@ -214,13 +215,13 @@ async function mascomic() {
                                 if (character.thumbnail !== 0) {
                                     img__character.src = character.thumbnail.path + '.' + character.thumbnail.extension
                                 } else {
-                                    img__character.src = "img/no characters.jpg"
+                                    img__character.src = "../img/no characters.jpg"
                                 }
                                 const id = character.id
                                 const button__character = document.createElement('button')
                                 const alink__character = document.createElement('a')
                                 alink__character.setAttribute('target', '_blank')
-                                alink__character.href = `detalles.html?id=${id}`
+                                alink__character.href = `personaje-detalle.html?id=${id}`
                                 const alink__character__text = document.createTextNode('MORE ABOUT ME')
                                 alink__character.appendChild(alink__character__text)
                                 button__character.appendChild(alink__character)
@@ -240,27 +241,27 @@ async function mascomic() {
                 const container__characters__delete = document.querySelector('.container__characters')
                 container__characters__delete.remove()
             }
-            /* stories */
+            /* series */
             if (comic.series.length !== 0) {
                 async function infoserie() {
                     try {
-                        urlserie = comic.stories.collectionURI + `?apikey=${apikey}` + `&ts=${ts}` + `&hash=${hash}`
-                        const responseser = await fetch(urlserie)
-                        const infoser = await responseser.json()
-                        const inforesultadoser = await infoser.data.results
-                        inforesultadoser.forEach(serie => {
+                        const urlseries = comic.series.resourceURI + `?apikey=${apikey}` + `&ts=${ts}` + `&hash=${hash}`
+                        const responsese = await fetch(urlseries)
+                        const infose = await responsese.json()
+                        const inforesultadose = await infose.data.results
+                        inforesultadose.forEach(serie => {
                             if (serie !== 0) {
                                 const container__serie = document.querySelector('.container__serie')
                                 const content__serie = document.createElement('div')
                                 const serie__title = document.createElement('h3')
                                 const serie__title__text = document.createTextNode(serie.title)
                                 serie__title.appendChild(serie__title__text)
-                                const img__serie = document.createElement('img')
+                                const serie__img = document.createElement('img')
                                 const valide__img__serie = serie.thumbnail
                                 if (valide__img__serie) {
-                                    img__serie.src = serie.thumbnail.path + '.' + serie.thumbnail.extension
+                                    serie__img.src = serie.thumbnail.path + '.' + serie.thumbnail.extension
                                 } else {
-                                    img__serie.src = "img/no serie.jpg"
+                                    img__storie.src = "../img/no serie.jpg"
                                 }
                                 const button__serie = document.createElement('button')
                                 const alink__serie = document.createElement('a')
@@ -268,7 +269,7 @@ async function mascomic() {
                                 const alink__serie__text = document.createTextNode('MORE ABOUT ME')
                                 alink__serie.appendChild(alink__serie__text)
                                 button__serie.appendChild(alink__serie)
-                                content__serie.append(serie__title, img__serie, button__serie)
+                                content__serie.append(serie__title, serie__img, button__serie)
                                 container__serie.appendChild(content__serie)
                             } else {
                                 const container__serie__delete = document.querySelector('.container__serie')
@@ -279,10 +280,97 @@ async function mascomic() {
                         console.log("Se ha producido un error: ", error)
                     }
                 } infoserie()
+            } else {
+                const container__serie__delete = document.querySelector('.container__serie')
+                container__serie__delete.remove()
+            }
+            /* stories */
+            if (comic.stories.available) {
+                async function infostorie() {
+                    try {
+                        const urlstorie = comic.stories.collectionURI + `?apikey=${apikey}` + `&ts=${ts}` + `&hash=${hash}`
+                        const responsest = await fetch(urlstorie)
+                        const infost = await responsest.json()
+                        const inforesultadost = await infost.data.results
+                        inforesultadost.forEach(storie => {
+                            if (storie !== 0) {
+                                const container__storie = document.querySelector('.container__storie')
+                                const content__storie = document.createElement('div')
+                                const storie__title = document.createElement('h3')
+                                const storie__title__text = document.createTextNode(storie.title)
+                                storie__title.appendChild(storie__title__text)
+                                const img__storie = document.createElement('img')
+                                const valide__img__storie = storie.thumbnail
+                                if (valide__img__storie) {
+                                    img__storie.src = storie.thumbnail.path + '.' + storie.thumbnail.extension
+                                } else {
+                                    img__storie.src = "../img/no storie.jpg"
+                                }
+                                const button__storie = document.createElement('button')
+                                const alink__storie = document.createElement('a')
+                                alink__storie.setAttribute('target', '_blank')
+                                const alink__storie__text = document.createTextNode('MORE ABOUT ME')
+                                alink__storie.appendChild(alink__storie__text)
+                                button__storie.appendChild(alink__storie)
+                                content__storie.append(storie__title, img__storie, button__storie)
+                                container__storie.appendChild(content__storie)
+                            } else {
+                                const container__storie__delete = document.querySelector('.container__serie')
+                                container__storie__delete.remove()
+                            }
+                        })
+                    } catch (error) {
+                        console.log("Se ha producido un error: ", error)
+                    }
+                } infostorie()
             }
             else {
                 const container__serie__delete = document.querySelector('.container__serie')
                 container__serie__delete.remove()
+            }
+            /* EVENT */
+            if (comic.events.available) {
+                async function infoevent() {
+                    try {
+                        const urlevent = comic.events.collectionURI + `?apikey=${apikey}` + `&ts=${ts}` + `&hash=${hash}`
+                        const responseeve = await fetch(urlevent)
+                        const infoeve = await responseeve.json()
+                        const inforesultadoeve = await infoeve.data.results
+                        inforesultadoeve.forEach(events => {
+                            if (events !== 0) {
+                                const container__events = document.querySelector('.container__events')
+                                const content__events = document.createElement('div')
+                                const events__title = document.createElement('h3')
+                                const events__title__title = document.createTextNode(events.title)
+                                events__title.appendChild(events__title__title)
+                                const events__img = document.createElement('img')
+                                const valide__img__events = events.thumbnail
+                                if (valide__img__events) {
+                                    events__img.src = events.thumbnail.path + '.' + events.thumbnail.extension
+                                } else {
+                                    events__img.src = "../img/no event.jpg"
+                                }
+                                const button__events = document.createElement('button')
+                                const alink__events = document.createElement('a')
+                                alink__events.setAttribute('target', '_blank')
+                                const alink__events__text = document.createTextNode('MORE ABOUT ME')
+                                alink__events.appendChild(alink__events__text)
+                                button__events.appendChild(alink__events)
+                                content__events.append(events__title, events__img , button__events)
+                                container__events.appendChild(content__events)
+                            }
+                            else {
+                                const container__events__delete = document.querySelector('.container__events')
+                                container__events__delete.remove()
+                            }
+                        })
+                    } catch (error) {
+                        console.log("Se ha producido un error: ", error)
+                    } 
+                } infoevent()
+            } else {
+                const container__events__delete = document.querySelector('.container__events')
+                container__events__delete.remove()
             }
         });  
     } catch (error) {

@@ -80,7 +80,7 @@ async function mostrardetalles(){
                             comic__img.src = datecomics.thumbnail.path + '.' + datecomics.thumbnail.extension
                         }
                         else {
-                            comic__img.src = "img/no comic.jpg"
+                            comic__img.src = "../img/no comic.jpg"
                         }
                         content__comic.appendChild(comic__img)
                         container__comic.appendChild(content__comic)
@@ -89,7 +89,7 @@ async function mostrardetalles(){
                         const boton__comic = document.createElement('button')
                         const a__comic = document.createElement('a')
                         const a__comic__text = document.createTextNode('MORE INFORMATION HERE')
-                        a__comic.href = `comic.html?id=${comic__id}`/* pasando el id */
+                        a__comic.href = `comic-detalle.html?id=${comic__id}`/* pasando el id */
                         a__comic.setAttribute('target', '_blank')
                         a__comic.appendChild(a__comic__text)
                         boton__comic.appendChild(a__comic)
@@ -132,7 +132,7 @@ async function mostrardetalles(){
                                 serie__img.src = dateserie.thumbnail.path + '.' + dateserie.thumbnail.extension
                             }
                             else {
-                                serie__img.src = "img/no serie.jpg"
+                                serie__img.src = "../img/no serie.jpg"
                             }
                             content__series.appendChild(serie__img)
                             container__series.appendChild(content__series)
@@ -183,7 +183,7 @@ async function mostrardetalles(){
                             if (valide__img__stories) {
                                 stories__img.src = datastorie.thumbnail.path + '.' + datastorie.thumbnail.extension
                             }else {
-                                stories__img.src = "img/no storie.jpg"
+                                stories__img.src = "../img/no storie.jpg"
                             }
                             content__stories.appendChild(stories__img)
                             container__stories.appendChild(content__stories)
@@ -235,7 +235,7 @@ async function mostrardetalles(){
                             if (valid__img__event) {
                                 event__img.src = dateevent.thumbnail.path + '.' + dateevent.thumbnail.extension
                             } else {
-                                event__img.src = "img/no event.jpg"
+                                event__img.src = "../img/no event.jpg"
                             }
                             content__event.appendChild(event__img)
                             container__events.appendChild(content__event)
