@@ -2,7 +2,8 @@
 module.exports = {
   content: ['../API/APP/*.{html,js}'],
   theme: {
-    extend: {},
+    extend: {
+    },
   },
   plugins: [],
 }
