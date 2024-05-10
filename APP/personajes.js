@@ -53,4 +53,15 @@ async function traerpersonajes() {
         console.log('Se ha producido un error: ', error)
     }
 }
-traerpersonajes()
+document.addEventListener("DOMContentLoaded", function () {
+    // Mostrar loader
+    document.getElementById('loader').classList.remove('hidden');
+    // Llama a la función mostrardetalles después de mostrar el loader
+    traerpersonajes()
+});
+// Ocultar el loader
+window.addEventListener('load', function () {
+    setTimeout(function () {
+        document.getElementById('loader').classList.add('hidden');
+    }, 2000); // Retraso de 1000 milisegundos (1 segundo)
+});

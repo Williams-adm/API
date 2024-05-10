@@ -49,4 +49,12 @@ async function traercomics() {
         console.log('Se ha producido un error: ', error)
     }
 } 
-traercomics()
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById('loader').classList.remove('hidden');
+    traercomics()
+});
+window.addEventListener('load', function () {
+    setTimeout(function () {
+        document.getElementById('loader').classList.add('hidden');
+    }, 2000);
+});

@@ -4,17 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MARVEL CHARACTERS</title>
-    <link href="../src/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="../src/output.css">
 </head>
-<body>
+<body class="bg-black text-white text-center">
+    <!-- loader -->
+    <div class="contenedor__loader flex justify-center items-center h-screen bg-[url('/img/wall-loader-1.jpg')] flex-col bg-cover fixed w-screen" id="loader">
+        <img src="../img/loader-carga.png" alt="" class="logo__loader h-32 animate-bounce">
+        <h1 class="animate-pulse text-4xl font-bold font-sans bg-black text-white p-3 rounded-lg">LOADING ...</h1>
+    </div>
+    <!-- estilos -->
     <header>
-        <div class="h-20 border flex justify-center items-center">
-            <p>Aqui puede ir el banner</p>
+        <div class="flex justify-center py-4 bg-red-600 box-border">
+            <img src="../img/marvel.png" alt="Logo de Marvel" class="h-16" />
         </div>
     </header>
+
     <main class="container w-screen">
         <h1 class="text-center p-4 m-4">MARVEL CHARACTERS</h1>
     </main>
+    
     <script src="personajes.js"></script>
 </body>
 </html>

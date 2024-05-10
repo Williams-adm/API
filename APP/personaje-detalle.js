@@ -285,4 +285,13 @@ async function mostrardetalles(){
         console.log("Se ha producido un error: ", error)
     }
 }
-mostrardetalles()
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById('loader').classList.remove('hidden');
+    mostrardetalles()
+});
+window.addEventListener('load', function () {
+    setTimeout(function () {
+        document.getElementById('loader').classList.add('hidden');
+    }, 2000); 
+});

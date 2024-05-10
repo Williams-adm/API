@@ -197,7 +197,7 @@ async function mascomic() {
                 const container__creators__delete = document.querySelector('.container__creators')
                 container__creators__delete.remove()
             }
-            if (comic.characters.length !== 0) {
+            if (comic.characters.items.length !== 0) {
                 async function infocharacter() {
                     try {
                         urlcharacters = comic.characters.collectionURI + `?apikey=${apikey}` + `&ts=${ts}` + `&hash=${hash}`
@@ -377,4 +377,13 @@ async function mascomic() {
         console.log("Se ha producido un error: ", error)
     }
 }
-mascomic()
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById('loader').classList.remove('hidden');
+    mascomic()
+});
+
+window.addEventListener('load', function () {
+    setTimeout(function () {
+        document.getElementById('loader').classList.add('hidden');
+    }, 2000);
+});
